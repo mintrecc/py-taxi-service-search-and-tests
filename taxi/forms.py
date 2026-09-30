@@ -66,7 +66,7 @@ class DriverSearchForm(forms.ModelForm):
 
     class Meta(forms.ModelForm):
         model = get_user_model()
-        fields = ('username',)
+        fields = ("username",)
 
 
 class CarSearchForm(forms.ModelForm):
@@ -100,4 +100,4 @@ class ManufacturerSearchForm(forms.ModelForm):
 
     class Meta:
         model = Manufacturer
-        fields = ('name',)
+        fields = ("name",)

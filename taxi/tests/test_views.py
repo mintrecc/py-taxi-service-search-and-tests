@@ -21,7 +21,6 @@ class ManufacturersListTest(TestCase):
         )
         self.client.force_login(self.user)
 
-
     def test_retrieve_manufacturers(self):
         Manufacturer.objects.create(
             name="Audi",
@@ -32,12 +31,17 @@ class ManufacturersListTest(TestCase):
             country="Germany",
         )
 
-        response = self.client.get(MANUFACTURER_URL)
-        self.assertEqual(response.status_code, 200)
+        response_custom = self.client.get(MANUFACTURER_URL)
+        self.assertEqual(response_custom.status_code, 200)
         manufacturers = Manufacturer.objects.all()
-        self.assertEqual(list(response.context["manufacturer_list"]), list(manufacturers))
-        self.assertTemplateUsed(response, "taxi/manufacturer_list.html")
-
+        self.assertEqual(
+            list(response_custom.context["manufacturer_list"]),
+            list(manufacturers)
+        )
+        self.assertTemplateUsed(
+            response_custom,
+            "taxi/manufacturer_list.html"
+        )
 
     def test_manufacturer_context_messages(self):
         query = "Audi"
@@ -66,11 +70,14 @@ class DriversListTest(TestCase):
             license_number="DFE12345"
         )
         driver2.set_password("test1234")
-        response = self.client.get(DRIVER_URL)
-        self.assertEqual(response.status_code, 200)
+        response_custom = self.client.get(DRIVER_URL)
+        self.assertEqual(response_custom.status_code, 200)
         drivers = get_user_model().objects.all()
-        self.assertEqual(list(response.context["driver_list"]), list(drivers))
-        self.assertTemplateUsed(response, "taxi/driver_list.html")
+        self.assertEqual(
+            list(response_custom.context["driver_list"]),
+            list(drivers)
+        )
+        self.assertTemplateUsed(response_custom, "taxi/driver_list.html")
 
     def test_driver_context_message(self):
         query = "test1"
@@ -119,12 +126,11 @@ class CarListTest(TestCase):
         )
         car2.drivers.set([driver1, driver2])
 
-
-        response = self.client.get(CAR_URL)
-        self.assertEqual(response.status_code, 200)
+        response_custom = self.client.get(CAR_URL)
+        self.assertEqual(response_custom.status_code, 200)
         cars = Car.objects.all()
-        self.assertEqual(list(response.context["car_list"]), list(cars))
-        self.assertTemplateUsed(response, "taxi/car_list.html")
+        self.assertEqual(list(response_custom.context["car_list"]), list(cars))
+        self.assertTemplateUsed(response_custom, "taxi/car_list.html")
 
     def test_cars_context_message(self):
         query = "Q8"
