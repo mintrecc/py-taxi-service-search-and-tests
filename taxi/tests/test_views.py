@@ -1,6 +1,3 @@
-from urllib import response
-
-from django.db.models.sql import query
 from django.test import TestCase
 
 from django.contrib.auth import get_user_model
@@ -61,6 +58,7 @@ class ManufacturersListTest(TestCase):
         self.assertNotIn(self.bmw, object_list)
         self.assertIn(self.toyota, object_list)
 
+
 class DriversListTest(TestCase):
     def setUp(self) -> None:
         self.user = get_user_model().objects.create_user(
@@ -110,6 +108,7 @@ class DriversListTest(TestCase):
         self.assertIn(self.driver1, object_list)
         self.assertNotIn(self.driver3, object_list)
         self.assertIn(self.driver2, object_list)
+
 
 class CarListTest(TestCase):
     def setUp(self) -> None:
